@@ -5,6 +5,7 @@ namespace Jirafe\Bundle\MailChimpBundle\Connection;
 use Jirafe\Bundle\MailChimpBundle\Request;
 use Jirafe\Bundle\MailChimpBundle\Response;
 use Zend\Http\Client as HttpClient;
+use Zend\Http\Request as HttpRequest;
 
 /**
  * HTTP connection for the MailChimp API client
@@ -37,16 +38,17 @@ class HttpConnection implements ConnectionInterface
      */
     public function execute(Request $request)
     {
-        $this->client->setCookieJar();
+        $this->client->setCookies(array());
         $this->client->resetParameters();
         $this->client->setUri($this->getUri(
             $request->getMethod(),
             $request->getParam('apikey')
         ));
         $this->client->setParameterPost($request->getParams());
+        $this->client->setMethod(HttpRequest::METHOD_POST);
 
         try {
-            $rawResponse = $this->client->request(HttpClient::POST);
+            $rawResponse = $this->client->send();
             $response = unserialize($rawResponse->getBody());
             if (false === $response) {
                 // bad response
