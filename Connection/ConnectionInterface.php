@@ -11,6 +11,13 @@ use Jirafe\Bundle\MailChimpBundle\Response;
 interface ConnectionInterface
 {
     /**
+     * Returns the performed requests
+     *
+     * @return array
+     */
+    public function getRequests();
+
+    /**
      * Executes the given request
      *
      * @param  Request $request

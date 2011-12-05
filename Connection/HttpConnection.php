@@ -16,6 +16,7 @@ class HttpConnection implements ConnectionInterface
 
     protected $secure;
     protected $client;
+    protected $requests;
 
     /**
      * Constructor
@@ -34,10 +35,22 @@ class HttpConnection implements ConnectionInterface
     }
 
     /**
+     * Returns the performed requests
+     *
+     * @return array
+     */
+    public function getRequests()
+    {
+        return $this->requests;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function execute(Request $request)
     {
+        $this->requests[] = $request;
+
         $this->client->setCookies(array());
         $this->client->resetParameters();
         $this->client->setUri($this->getUri(
@@ -96,4 +109,5 @@ class HttpConnection implements ConnectionInterface
 
         return $scheme . $dc . '.' . $parts['host'] . $parts['path'] . '?' . $parts['query'] . '&method=' . $method;
     }
+
 }

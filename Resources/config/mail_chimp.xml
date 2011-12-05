@@ -23,6 +23,11 @@
             <argument>true</argument>
         </service>
 
+        <!-- Data collector -->
+        <service id="mail_chimp.data_collector" class="Jirafe\Bundle\MailChimpBundle\DataCollector\MailChimpDataCollector">
+            <tag name="data_collector" />
+        </service>
+
         <!-- Client -->
         <service id="mail_chimp.client" class="%mail_chimp.client.class%">
             <argument>%mail_chimp.api_key%</argument>

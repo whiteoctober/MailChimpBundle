@@ -37,6 +37,10 @@ class JirafeMailChimpExtension extends Extension
 
         $definition = $container->getDefinition('mail_chimp.client');
         $definition->addArgument(new Reference(sprintf('mail_chimp.connection.%s', $config['connection'])));
+
+        // Add connection to data collector
+        $definition = $container->getDefinition('mail_chimp.data_collector');
+        $definition->addArgument(new Reference(sprintf('mail_chimp.connection.%s', $config['connection'])));
     }
 
     /**
